@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import FullCamera from './camera';
 import ProfilePictureSelector from './profilePicture';
+import Map from './map';
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -27,6 +28,8 @@ export default function App() {
       className="flex-1 bg-white"
       contentContainerStyle={{ alignItems: "center", justifyContent: "center", paddingVertical: 50 }}
     >
+      <Map />
+
       <ProfilePictureSelector />
       <Image
         source={{
@@ -48,6 +51,7 @@ export default function App() {
       </View>
 
       <FullCamera />
+      
     </ScrollView>
   );
 }
