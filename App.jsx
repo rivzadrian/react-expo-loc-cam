@@ -6,6 +6,7 @@ import { useState } from 'react';
 import FullCamera from './camera';
 import ProfilePictureSelector from './profilePicture';
 import Map from './map';
+import NotificationsExample from './notifications';
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -51,7 +52,7 @@ export default function App() {
       </View>
 
       <FullCamera />
-      
+      <NotificationsExample />
     </ScrollView>
   );
 }

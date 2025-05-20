@@ -38,7 +38,7 @@ export default function Map() {
   }
 
   return (
-    <>
+    <View style={{ width: "100%", height: 370, marginBottom: 20 }}>
     <MapView
       style={{ flex: 1 }} // fills the parent View
       initialRegion={{
@@ -58,7 +58,7 @@ export default function Map() {
     </MapView>
     <Text style={styles.cityText}>Orang ini dicari Di</Text>
     <Text style={styles.cityText}>{city}</Text>
-    </>
+  </View>
   );
 }
 
