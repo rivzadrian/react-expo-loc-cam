@@ -9,18 +9,18 @@ import {
   Button,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons"; // Ensure you have this installed
 
-export default function ProfilePictureSelector() {
+export default function ProfilePictureHeader() {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   const pickImage = async (source) => {
     let result = {};
     if (source === "camera") {
-      const cameraPermission =
-        await ImagePicker.requestCameraPermissionsAsync();
-      if (cameraPermission.status !== "granted") {
-        alert("Permission to access camera is required!");
+      const permission = await ImagePicker.requestCameraPermissionsAsync();
+      if (permission.status !== "granted") {
+        alert("Camera permission is required!");
         return;
       }
       result = await ImagePicker.launchCameraAsync({
@@ -29,11 +29,10 @@ export default function ProfilePictureSelector() {
         aspect: [1, 1],
         quality: 1,
       });
-    } else if (source === "library") {
-      const libraryPermission =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (libraryPermission.status !== "granted") {
-        alert("Permission to access media library is required!");
+    } else {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (permission.status !== "granted") {
+        alert("Library permission is required!");
         return;
       }
       result = await ImagePicker.launchImageLibraryAsync({
@@ -51,21 +50,34 @@ export default function ProfilePictureSelector() {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Image
-          source={{
-            uri:
-              image ||
-              "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
-          }}
-          style={styles.profileImage}
+    <>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Image
+            source={
+              image
+                ? { uri: image }
+                : require("./assets/playstore.png") // Fallback image
+            }
+            style={styles.avatar}
+          />
+        </TouchableOpacity>
+
+        <View>
+          <Text style={styles.userName}>Diffa mameeennn</Text>
+        </View>
+
+        <Ionicons
+          name="sunny-outline"
+          size={24}
+          color="#f5b400"
+          style={{ marginLeft: "auto" }}
         />
-      </TouchableOpacity>
+      </View>
 
       <Modal
         animationType="slide"
-        transparent={true}
+        transparent
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
@@ -80,22 +92,30 @@ export default function ProfilePictureSelector() {
           </View>
         </View>
       </Modal>
-    </View>
+    </>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: "#fff",
   },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    borderWidth: 3,
-    borderColor: "black",
+  avatar: {
+    width: 70,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12,
+    borderWidth: 2,
+    borderColor: "#ccc",
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
   modalOverlay: {
     flex: 1,
@@ -105,8 +125,8 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
+    padding: 10,
+    borderRadius: 1,
     width: "80%",
     alignItems: "center",
   },

@@ -7,6 +7,7 @@ import FullCamera from './camera';
 import ProfilePictureSelector from './profilePicture';
 import Map from './map';
 import NotificationsExample from './notifications';
+import Diffa from './diffa';
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -29,8 +30,8 @@ export default function App() {
       className="flex-1 bg-white"
       contentContainerStyle={{ alignItems: "center", justifyContent: "center", paddingVertical: 50 }}
     >
-      <Map />
-
+      {/* <Map /> */}
+     
       <ProfilePictureSelector />
       <Image
         source={{
@@ -53,6 +54,7 @@ export default function App() {
 
       <FullCamera />
       <NotificationsExample />
+      <Diffa />
     </ScrollView>
   );
 }
